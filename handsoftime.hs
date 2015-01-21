@@ -1,5 +1,6 @@
 import Control.Monad (liftM)
 import Data.Array.Unboxed
+import Data.Ix (range)
 
 type Position = Int
 type Board = (Int, UArray Position Int)
@@ -7,6 +8,9 @@ type Path = [Position]
 
 boardBounds :: Int -> (Position, Position)
 boardBounds size = (0, size - 1)
+
+allPositions :: Int -> [Position]
+allPositions = range . boardBounds
 
 makeBoard :: [Int] -> Board
 makeBoard ns = (size, listArray (boardBounds size) ns) where size = length ns
@@ -18,7 +22,7 @@ startState size =
   GameState [] (listArray (boardBounds size) (replicate size True)) size
 
 validSteps :: Board -> GameState -> [Position]
-validSteps (size, _)     (GameState []     _     _) = [0..size - 1]
+validSteps (size, _)     (GameState []     _     _) = allPositions size
 validSteps (size, steps) (GameState (p:ps) avail _) =
   filter (avail!) $ map (`mod` size) [p + step, p + size - step]
     where step = steps!p
