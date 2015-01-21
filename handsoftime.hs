@@ -24,13 +24,16 @@ validSteps (size, steps) (GameState (Just p) avail _) =
   filter (avail!) $ map (`mod` size) [p + step, p + size - step]
     where step = steps!p
 
+moveTo :: Position -> GameState -> GameState
+moveTo p (GameState _ avail numAvail) =
+  GameState (Just p) (avail // [(p, False)]) (numAvail - 1)
+
 validPathsFrom :: Board -> GameState -> [Path]
-validPathsFrom board state@(GameState _ avail numAvail)
+validPathsFrom board state@(GameState _ _ numAvail)
   | numAvail == 0	= [[]]
   | otherwise     =
     [ p:path | p <- validSteps board state,
-               path <- validPathsFrom board $
-                GameState (Just p) (avail // [(p, False)]) (numAvail - 1) ]
+               path <- validPathsFrom board $ moveTo p state ]
 
 main = do
   putStrLn "Input the puzzle as a list of Ints:"
