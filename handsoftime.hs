@@ -30,7 +30,7 @@ moveTo p (GameState _ avail numAvail) =
 
 validPathsFrom :: Board -> GameState -> [Path]
 validPathsFrom board state@(GameState _ _ numAvail)
-  | numAvail == 0	= [[]]
+  | numAvail == 0 = [[]]
   | otherwise     =
     [ p:path | p <- validSteps board state,
                path <- validPathsFrom board $ moveTo p state ]
