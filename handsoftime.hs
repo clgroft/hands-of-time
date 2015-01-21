@@ -17,16 +17,17 @@ startState :: Int -> GameState
 startState size =
   GameState [] (listArray (boardBounds size) (replicate size True)) size
 
-steps :: Board -> GameState -> [Position]
-steps (size, _)     (GameState []     _     _) = [0..size - 1]
-steps (size, steps) (GameState (p:ps) avail _) =
-  map (`mod` size) [p + step, p + size - step] where step = steps!p
+validSteps :: Board -> GameState -> [Position]
+validSteps (size, _)     (GameState []     _     _) = [0..size - 1]
+validSteps (size, steps) (GameState (p:ps) avail _) =
+  filter (avail!) $ map (`mod` size) [p + step, p + size - step]
+    where step = steps!p
 
 validPathsFrom :: Board -> GameState -> [Path]
 validPathsFrom board state@(GameState ps avail numAvail)
   | numAvail == 0	= [reverse ps]
   | otherwise     =
-    [ path | p <- steps board state, avail!p,
+    [ path | p <- validSteps board state,
              path <- validPathsFrom board $
                 GameState (p:ps) (avail // [(p, False)]) (numAvail - 1) ]
 
