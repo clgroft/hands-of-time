@@ -26,10 +26,10 @@ validSteps (size, steps) (GameState (p:ps) avail _) =
 
 validPathsFrom :: Board -> GameState -> [Path]
 validPathsFrom board state@(GameState ps avail numAvail)
-  | numAvail == 0	= [reverse ps]
+  | numAvail == 0	= [[]]
   | otherwise     =
-    [ path | p <- validSteps board state,
-             path <- validPathsFrom board $
+    [ p:path | p <- validSteps board state,
+               path <- validPathsFrom board $
                 GameState (p:ps) (avail // [(p, False)]) (numAvail - 1) ]
 
 main = do
