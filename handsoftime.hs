@@ -18,11 +18,11 @@ data GameState = GameState {
   numAvail :: Int                   -- for efficiency
 }
 
-startState :: Int -> GameState
-startState size =
+startState :: Board -> GameState
+startState (size, steps) =
   GameState Nothing
             -- all positions are free at the start
-            (listArray (boardBounds size) (repeat True))
+            (listArray (bounds steps) (repeat True))
             size
 
 validSteps :: Board -> GameState -> [Position]
@@ -47,5 +47,5 @@ main = do
   putStrLn "Input the puzzle as a list of Ints:"
   boardList <- liftM read getLine
   putStrLn "Calculating..."
-  let board@(size, _) = makeBoard boardList
-  print . head . validPathsFrom board $ startState size
+  let board = makeBoard boardList
+  print . head . validPathsFrom board $ startState board
