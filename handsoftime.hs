@@ -6,11 +6,8 @@ type Position = Int -- technically, Int modulo size of board
 type Board = (Int, UArray Position Int) -- = (size, step from each position)
 type Path = [Position]
 
-boardBounds :: Int -> (Position, Position)
-boardBounds size = (0, size - 1)
-
 makeBoard :: [Int] -> Board
-makeBoard ns = (size, listArray (boardBounds size) ns) where size = length ns
+makeBoard ns = (size, listArray (0, size - 1) ns) where size = length ns
 
 data GameState = GameState {
   currPos  :: Maybe Position,       -- there is no position at the beginning
