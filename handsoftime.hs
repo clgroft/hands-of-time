@@ -22,7 +22,7 @@ startState :: Int -> GameState
 startState size =
   GameState Nothing
             -- all positions are free at the start
-            (listArray (boardBounds size) (replicate size True))
+            (listArray (boardBounds size) (repeat True))
             size
 
 validSteps :: Board -> GameState -> [Position]
