@@ -27,7 +27,7 @@ startState (size, steps) =
 
 validSteps :: Board -> GameState -> [Position]
 -- every move is valid at the beginning
-validSteps (size, _) (GameState Nothing _ _) = range $ boardBounds size
+validSteps (_,    steps) (GameState Nothing _ _) = range $ bounds steps
 validSteps (size, steps) (GameState (Just p) avail _) =
   filter (avail!) $ map (`mod` size) [p + step, p + size - step]
     where step = steps!p
