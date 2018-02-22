@@ -1,7 +1,6 @@
 import Prelude hiding (null)
 import Control.Monad (liftM)
 import Data.Array.Unboxed
-import Data.Ix (range)
 import Data.Set hiding (filter)
 
 type Position = Int -- technically, Int modulo size of board
