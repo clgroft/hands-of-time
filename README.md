@@ -12,10 +12,10 @@ must visit each number precisely once, and after visiting a position with
 number _k_, the next position (if any) must be precisely _k_ spaces clockwise
 or counterclockwise from the current position.
 
-(In more CS-friendly terms, there is a directed graph with _N_ vertices in a
-circle, each vertex has out-degree 2, and the targets of the two edges starting
-at a given vertex _v_ are at equal distances but opposite directions from _v_,
-and the player must find a Hamiltonian path.)
+(In more CS-friendly terms, the player is given a directed graph with _N_
+vertices in a circle where the targets of the two edges starting at a given
+vertex _v_ are at equal distances but opposite directions from _v_,
+and must find a Hamiltonian path through this graph.)
 
 Operation
 ---------
